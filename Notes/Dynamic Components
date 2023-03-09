@@ -1,0 +1,71 @@
+A dynamic component is a Vue.js component that can be dynamically created and destroyed based on the user's actions or other conditions. With dynamic components, you can render different components based on the data or state of your application.
+
+In Vue.js, there are two ways to create dynamic components: using the v-if directive or using the built-in dynamic component feature. In this article, we'll focus on the latter.
+
+Using Dynamic Components with the Composition API
+To create a dynamic component in Vue.js using the Composition API, we first need to import the defineComponent function from Vue:
+
+import { defineComponent } from 'vue';
+Next, we can create our component and specify the props and other data that it will need:
+
+javascript
+Copy code
+const MyDynamicComponent = defineComponent({
+  props: {
+    componentName: {
+      type: String,
+      required: true,
+    },
+  },
+  setup(props) {
+    // ...
+  },
+});
+In this example, our dynamic component takes a prop called componentName, which specifies the name of the component that should be rendered.
+
+Next, we can use the built-in dynamic component feature to render the appropriate component based on the componentName prop:
+
+<template>
+  <component :is="componentName" />
+</template>
+In this example, we're using the v-bind directive to bind the is prop of the component to the componentName prop, which will dynamically render the appropriate component.
+
+Finally, we can use our dynamic component in our application:
+
+<template>
+  <div>
+    <button @click="componentName = 'MyComponent1'">Component 1</button>
+    <button @click="componentName = 'MyComponent2'">Component 2</button>
+    <MyDynamicComponent :componentName="componentName" />
+  </div>
+</template>
+
+<script>
+import { defineComponent, reactive } from 'vue';
+import MyDynamicComponent from './MyDynamicComponent.vue';
+import MyComponent1 from './MyComponent1.vue';
+import MyComponent2 from './MyComponent2.vue';
+
+export default defineComponent({
+  components: {
+    MyDynamicComponent,
+    MyComponent1,
+    MyComponent2,
+  },
+  setup() {
+    const state = reactive({
+      componentName: '',
+    });
+    return {
+      ...state,
+    };
+  },
+});
+</script>
+In this example, we're using two buttons to change the value of the componentName prop, which will cause the appropriate component to be rendered by our dynamic component.
+
+Conclusion
+Dynamic components are a powerful feature in Vue.js that allow for flexible and reusable code organization. With the Composition API, creating dynamic components is easy and intuitive, making it a great choice for building complex applications.
+
+
+
