@@ -1,0 +1,73 @@
+In Vue.js, the Composition API provides a new way to organize and reuse logic in components. One important feature of Vue.js is its reactivity system, which allows components to automatically update when their data changes. Watchers are a powerful tool in Vue.js that allows you to respond to changes in data properties and execute custom logic.
+
+Watchers in the Composition API
+In the Composition API, you can define a watcher using the watch function. The watch function takes two arguments: the first is the data property to watch, and the second is a callback function that is executed when the data property changes. The callback function receives two arguments: the new value and the old value of the data property.
+
+import { ref, watch } from 'vue'
+
+export default {
+  setup() {
+    const count = ref(0)
+
+    watch(count, (newValue, oldValue) => {
+      console.log(`Count changed from ${oldValue} to ${newValue}`)
+    })
+
+    return { count }
+  }
+}
+In the example above, we define a count data property using the ref function. We then define a watcher using the watch function that logs a message to the console whenever the count data property changes.
+
+Watching Multiple Properties
+You can also watch multiple data properties using an object with keys corresponding to the property names and values that are callback functions:
+
+javascript
+Copy code
+import { ref, watch } from 'vue'
+
+export default {
+  setup() {
+    const firstName = ref('')
+    const lastName = ref('')
+
+    watch(
+      { firstName, lastName },
+      (newValues, oldValues) => {
+        console.log(`Name changed from ${oldValues.firstName} ${oldValues.lastName} to ${newValues.firstName} ${newValues.lastName}`)
+      }
+    )
+
+    return { firstName, lastName }
+  }
+}
+In the example above, we define two data properties, firstName and lastName, and we watch both of them using an object with keys corresponding to their names.
+
+Stopping a Watcher
+You can stop a watcher by calling the function that the watch function returns:
+
+
+import { ref, watch } from 'vue'
+
+export default {
+  setup() {
+    const count = ref(0)
+
+    const stopWatching = watch(count, (newValue, oldValue) => {
+      console.log(`Count changed from ${oldValue} to ${newValue}`)
+    })
+
+    // Stop watching after 5 seconds
+    setTimeout(() => {
+      stopWatching()
+    }, 5000)
+
+    return { count }
+  }
+}
+In the example above, we define a watcher for the count data property and save the function that the watch function returns to a variable. We then stop watching the count data property after 5 seconds by calling the function.
+
+In summary, watchers are a powerful tool in Vue.js that allows you to respond to changes in data properties and execute custom logic. In the Composition API, you can define watchers using the watch function, which takes a data property to watch and a callback function to execute when the data property changes.
+
+
+
+

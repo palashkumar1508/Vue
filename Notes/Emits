@@ -1,0 +1,60 @@
+$emit is a method provided by the Vue instance that allows you to emit a custom event in a component. This method can be used to trigger an event in the parent component that can then be listened to using the v-on directive.
+
+Here's an example:
+
+Child Component:
+
+javascript
+Copy code
+<template>
+  <div>
+    <button v-on:click="sendMessage">Send Message</button>
+  </div>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  name: 'ChildComponent',
+  setup(_, { emit }) {
+    const message = ref('Hello from child component!')
+
+    const sendMessage = () => {
+      emit('message-sent', message.value)
+    }
+
+    return { sendMessage }
+  }
+})
+</script>
+In this example, the child component emits a message-sent event when the user clicks on the "Send Message" button using the $emit method. The emit method takes two arguments: the name of the event to emit and the data to pass to the event.
+
+Parent Component:
+
+javascript
+Copy code
+<template>
+  <div>
+    <child-component v-on:message-sent="onMessageSent"></child-component>
+  </div>
+</template>
+
+<script>
+import { defineComponent } from 'vue'
+import ChildComponent from './ChildComponent.vue'
+
+export default defineComponent({
+  name: 'ParentComponent',
+  components: { ChildComponent },
+  methods: {
+    onMessageSent(message) {
+      console.log(message)
+    }
+  }
+})
+</script>
+In this example, the parent component listens to the message-sent event emitted by the child component using the v-on directive. The v-on directive takes two arguments: the name of the event to listen to and the function to call when the event is triggered. In this case, the onMessageSent method is called with the message data passed from the child component.
+
+Overall, $emit is a useful tool for triggering events in a parent component from a child component, allowing for easy communication between components.
+

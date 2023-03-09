@@ -1,0 +1,26 @@
+Reactivity is a fundamental concept in Vue.js, and it is no different in the Composition API. In Vue 3, the Composition API provides a more flexible and powerful way of managing reactivity than the Options API. In this article, we'll explore the fundamentals of reactivity in the Composition API and how it works with examples.
+
+Reactive Data
+In the Composition API, reactive data is managed using the reactive function. This function creates a reactive proxy around an object, which allows Vue to track changes to the object and update the UI accordingly. Let's look at an example:
+
+
+import { reactive } from 'vue';
+
+export default {
+  setup() {
+    const state = reactive({
+      counter: 0,
+    });
+
+    function increment() {
+      state.counter++;
+    }
+
+    return {
+      state,
+      increment,
+    };
+  },
+};
+In this example, we have a simple counter component with a counter data property and a function to increment the counter. We use the reactive function to create a reactive proxy around an object that contains the counter property. When the increment function is called, Vue automatically updates the UI to display the new value of the counter.
+

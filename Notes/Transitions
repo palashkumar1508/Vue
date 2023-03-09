@@ -1,0 +1,91 @@
+What are Transitions?
+Transitions are a way to add animations to elements when they are added, updated, or removed from the DOM. They allow you to add some visual feedback to your application, making it more engaging and user-friendly. Transitions in Vue.js Composition API are similar to those in the Options API, but the syntax is slightly different.
+
+How to Use Transitions in Vue.js Composition API?
+To use transitions in Vue.js Composition API, we need to import the defineTransition function from the vue package. We can then define a transition by calling this function and passing in an object with the necessary configuration options.
+
+Here's an example of how to define a simple transition:
+import { defineTransition } from 'vue';
+
+const fadeTransition = defineTransition({
+  enter(el, done) {
+    el.style.opacity = 0;
+    setTimeout(() => {
+      el.style.transition = 'opacity 0.5s';
+      el.style.opacity = 1;
+      done();
+    }, 0);
+  },
+  leave(el, done) {
+    el.style.transition = 'opacity 0.5s';
+    el.style.opacity = 0;
+    setTimeout(() => done(), 500);
+  },
+});
+In this example, we define a transition called fadeTransition that fades in elements when they are added and fades out elements when they are removed. The enter function is called when an element is added to the DOM, and the leave function is called when an element is removed from the DOM.
+
+The enter function takes two arguments: the element being added (el) and a callback function (done) that needs to be called when the transition is complete. In this case, we set the opacity of the element to 0, and then use a setTimeout function to delay the transition by 0 milliseconds (to allow the browser to apply the initial styles). We then set the transition property to opacity 0.5s and the opacity to 1, which fades in the element. Finally, we call the done callback to signal that the transition is complete.
+
+The leave function is similar, but instead of fading in the element, we fade it out by setting the opacity to 0. We then use a setTimeout function to delay calling the done callback by 500 milliseconds (the duration of the transition).
+
+Once we have defined our transition, we can use it in our Vue components by adding the v-transition directive to the element we want to animate:
+
+<template>
+  <div v-for="item in items" :key="item.id" v-transition="fadeTransition">
+    {{ item.text }}
+  </div>
+</template>
+
+<script>
+import { ref } from 'vue';
+import { fadeTransition } from './transitions';
+
+export default {
+  setup() {
+    const items = ref([
+      { id: 1, text: 'Item 1' },
+      { id: 2, text: 'Item 2' },
+      { id: 3, text: 'Item 3' },
+    ]);
+
+    return { items, fadeTransition };
+  },
+};
+</script>
+
+
+v-transition directive to apply our fadeTransition to each item in a list. The v-for directive generates a list of items based on the items array, and the :key directive ensures that each item is uniquely identified by its id property.
+
+Transition Hooks
+In addition to the enter and leave functions, we can also define several other transition hooks to customize the animation behavior. Here are some of the available hooks:
+
+beforeEnter(el) - called before an element is added to the DOM
+afterEnter(el) - called after an element is added to the DOM
+enterCancelled(el) - called if an element's enter transition is cancelled
+beforeLeave(el) - called before an element is removed from the DOM
+afterLeave(el) - called after an element is removed from the DOM
+leaveCancelled(el) - called if an element's leave transition is cancelled
+We can add these hooks to our transition definition to customize the behavior. For example, we could add a beforeEnter hook to set the initial position of an element:
+
+
+const slideTransition = defineTransition({
+  beforeEnter(el) {
+    el.style.transform = 'translateX(-100%)';
+  },
+  enter(el, done) {
+    el.style.transition = 'transform 0.5s';
+    el.style.transform = 'translateX(0)';
+    setTimeout(() => done(), 500);
+  },
+  leave(el, done) {
+    el.style.transition = 'transform 0.5s';
+    el.style.transform = 'translateX(-100%)';
+    setTimeout(() => done(), 500);
+  },
+});
+In this example, we define a transition called slideTransition that slides elements in from the left when they are added and slides them out to the left when they are removed. We use the beforeEnter hook to set the initial position of the element to translateX(-100%), which moves it off-screen to the left. We then use the enter hook to animate the element's position to translateX(0), which slides it in from the left. The leave hook is similar, but it animates the element's position to translateX(-100%) to slide it out to the left.
+
+Conclusion
+Transitions are a powerful feature of the Vue.js Composition API that allow us to add animations to our applications. By defining our transitions using the defineTransition function, we can customize the animation behavior using a variety of hooks. With transitions, we can create engaging and interactive user interfaces that keep users coming back for more.
+
+

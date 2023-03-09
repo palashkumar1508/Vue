@@ -1,0 +1,95 @@
+Fallthrough attributes are a new feature in Vue.js 3 that allow you to pass all of the attributes from a parent component to a child component, using the composition API. This can be useful when you want to create a wrapper component that passes all of its attributes to a child component, without having to explicitly define each attribute in the child component's template.
+
+To use fallthrough attributes, you need to use the inheritAttrs option in the child component, and the $attrs object in the child component's template. Here's an example:
+
+// ChildComponent.vue
+
+<template>
+  <div v-bind="$attrs">
+    <slot></slot>
+  </div>
+</template>
+
+<script>
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  inheritAttrs: false
+})
+</script>
+
+// ParentComponent.vue
+
+<template>
+  <child-component class="wrapper-class" id="wrapper-id" data-custom-attribute="custom value">
+    <p>Child content</p>
+  </child-component>
+</template>
+
+<script>
+import { defineComponent } from 'vue'
+import ChildComponent from './ChildComponent.vue'
+
+export default defineComponent({
+  components: {
+    ChildComponent
+  }
+})
+</script>
+In this example, we have a ChildComponent that inherits all of its attributes from the parent component using the $attrs object. The inheritAttrs option is set to false to prevent the child component from inheriting all attributes by default, and we use the v-bind directive to bind all of the attributes to the child component's root element.
+
+In the ParentComponent, we pass several attributes to the ChildComponent, including a class, an ID, and a custom data attribute. All of these attributes are passed to the ChildComponent using fallthrough attributes, without having to explicitly define each attribute in the ChildComponent's template.
+
+Fallthrough attributes can also be combined with other props and slots in the child component. For example:
+
+// ChildComponent.vue
+
+<template>
+  <div v-bind="$attrs">
+    <h1>{{ title }}</h1>
+    <slot></slot>
+  </div>
+</template>
+
+<script>
+import { defineComponent, computed } from 'vue'
+
+export default defineComponent({
+  inheritAttrs: false,
+  props: {
+    title: {
+      type: String,
+      default: 'Default title'
+    }
+  },
+  computed: {
+    titleStyle() {
+      return {
+        color: this.$attrs.titleColor
+      }
+    }
+  }
+})
+</script>
+
+// ParentComponent.vue
+
+<template>
+  <child-component class="wrapper-class" id="wrapper-id" data-custom-attribute="custom value" title="Custom title" title-color="red">
+    <p>Child content</p>
+  </child-component>
+</template>
+
+<script>
+import { defineComponent } from 'vue'
+import ChildComponent from './ChildComponent.vue'
+
+export default defineComponent({
+  components: {
+    ChildComponent
+  }
+})
+</script>
+In this example, the ChildComponent has a title prop and a computed property titleStyle that uses a custom attribute passed through $attrs to set the color of the title. The ParentComponent passes a custom title and title color attribute to the ChildComponent, along with other attributes using fallthrough attributes. The child component then uses these attributes to render a custom title with a custom color.
+
+

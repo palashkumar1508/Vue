@@ -1,0 +1,227 @@
+In Vue.js composition API, form input bindings are used to create two-way data bindings between form inputs and reactive data. This allows you to easily manage form data and update your application's state in real time. Here's how you can use form input bindings in Vue.js composition API:
+
+Creating Reactive Data:
+The first step is to create a reactive object using the reactive() function. This object will store the form data and be used to update your application's state. You can also use ref() function to create a reactive variable.
+
+import { reactive } from 'vue'
+
+export default {
+  setup() {
+    const formData = reactive({
+      name: '',
+      email: '',
+      password: ''
+    })
+
+    return { formData }
+  }
+}
+In this example, a reactive object formData is created with three properties: name, email, and password.
+
+Binding Form Inputs:
+The next step is to bind the form inputs to the reactive data using the v-model directive. This directive creates a two-way data binding between the form input and the reactive data.
+
+<template>
+  <form>
+    <input v-model="formData.name" type="text" />
+    <input v-model="formData.email" type="email" />
+    <input v-model="formData.password" type="password" />
+  </form>
+</template>
+In this example, three form inputs are bound to the reactive data using the v-model directive. The formData.name property is bound to a text input, formData.email is bound to an email input, and formData.password is bound to a password input.
+
+Submitting Form Data:
+To submit the form data, you can create a submit event handler that is called when the form is submitted. This handler can then use the form data to update your application's state.
+
+import { reactive } from 'vue'
+
+export default {
+  setup() {
+    const formData = reactive({
+      name: '',
+      email: '',
+      password: ''
+    })
+
+    function handleSubmit() {
+      console.log(formData)
+      // Update application state with form data
+    }
+
+    return { formData, handleSubmit }
+  }
+}
+In this example, a submit event handler handleSubmit is created that logs the form data to the console. You can then use this data to update your application's state.
+
+Adding Validation:
+You can also add validation to your form inputs using the v-model directive and computed properties. Computed properties can be used to derive new values from existing data, such as validating form input data.
+
+import { reactive, computed } from 'vue'
+
+export default {
+  setup() {
+    const formData = reactive({
+      name: '',
+      email: '',
+      password: ''
+    })
+
+    const isFormValid = computed(() => {
+      return formData.name.length > 0 &&
+        formData.email.length > 0 &&
+        formData.password.length > 0
+    })
+
+    function handleSubmit() {
+      if (isFormValid.value) {
+        console.log(formData)
+        // Update application state with form data
+      } else {
+        console.log('Form is invalid')
+      }
+    }
+
+    return { formData, isFormValid, handleSubmit }
+  }
+}
+In this example, a computed property isFormValid is created that checks if all form inputs have a value. The submit event handler handleSubmit then checks if the form is valid before logging the form data to the console or displaying an error message.
+
+In summary, form input bindings in Vue.js composition API allow you to easily manage form data and update your application's state in real time. By creating a reactive object, binding form inputs using the
+
+
+#####Value Binding####
+
+In Vue.js composition API, the v-bind:value directive is used to bind a value to form input elements such as radio buttons, checkboxes, and select options. Here's how you can use v-bind:value with form input elements in Vue.js composition API:
+
+**Binding Value to Radio Buttons:
+To bind a value to radio buttons, you can use the v-model directive along with the v-bind:value directive.
+
+<template>
+  <div>
+    <input type="radio" v-model="selectedColor" v-bind:value="red">
+    <input type="radio" v-model="selectedColor" v-bind:value="blue">
+  </div>
+</template>
+
+<script>
+import { ref } from 'vue'
+
+export default {
+  setup() {
+    const selectedColor = ref('red')
+    const red = ref('#ff0000')
+    const blue = ref('#0000ff')
+
+    return { selectedColor, red, blue }
+  }
+}
+</script>
+In this example, the v-model directive is used to bind the selectedColor variable to the radio buttons. The v-bind:value directive is used to bind the red and blue variables to the radio buttons.
+
+**Binding Value to Checkboxes:
+To bind a value to checkboxes, you can use the v-model directive along with the v-bind:value directive.
+
+<template>
+  <div>
+    <input type="checkbox" v-model="isChecked" v-bind:value="true">
+  </div>
+</template>
+
+<script>
+import { ref } from 'vue'
+
+export default {
+  setup() {
+    const isChecked = ref(false)
+
+    return { isChecked }
+  }
+}
+</script>
+In this example, the v-model directive is used to bind the isChecked variable to the checkbox. The v-bind:value directive is used to bind the value true to the checkbox.
+
+**Binding Value to Select Options:
+To bind a value to select options, you can use the v-model directive along with the v-bind:value directive.
+
+<template>
+  <div>
+    <select v-model="selectedOption">
+      <option v-bind:value="1">Option 1</option>
+      <option v-bind:value="2">Option 2</option>
+    </select>
+  </div>
+</template>
+
+<script>
+import { ref } from 'vue'
+
+export default {
+  setup() {
+    const selectedOption = ref(1)
+
+    return { selectedOption }
+  }
+}
+</script>
+In this example, the v-model directive is used to bind the selectedOption variable to the select element. The v-bind:value directive is used to bind the values 1 and 2 to the select options.
+
+In summary, the v-bind:value directive is a powerful tool in Vue.js composition API for binding values to form input elements. By using it in conjunction with the v-model directive, you can easily manage the state of your form input elements in Vue.js composition API.
+
+
+In Vue.js, the Composition API provides a new way to organize and reuse logic in components. The v-model directive is used to create two-way data bindings between form inputs and data properties in Vue components. When using the Composition API with v-model, two useful modifiers are .number and .trim.
+
+
+#######Modifiers in Form input Binding#########
+
+.number Modifier
+The .number modifier is used to ensure that the value of an input is always converted to a number. This is useful when working with number inputs, such as <input type="number">, where the input value is always a string.
+
+Example
+Suppose we have an input that accepts a number, and we want to store the value in a numeric data property using the Composition API:
+
+<template>
+  <input v-model.number="quantity" type="number">
+</template>
+
+<script>
+import { ref } from 'vue'
+
+export default {
+  setup() {
+    const quantity = ref(0)
+
+    return { quantity }
+  }
+}
+</script>
+In the example above, we use the .number modifier to ensure that the input value is always converted to a number before being assigned to the quantity data property. If we didn't use the .number modifier, the input value would be stored as a string.
+
+.trim Modifier
+The .trim modifier is used to remove whitespace from the beginning and end of an input value. This is useful when working with text inputs, such as <input type="text">, where users may accidentally include extra spaces in their input.
+
+Example
+Suppose we have a text input that accepts a string, and we want to store the value in a data property using the Composition API:
+
+
+<template>
+  <input v-model.trim="username" type="text">
+</template>
+
+<script>
+import { ref } from 'vue'
+
+export default {
+  setup() {
+    const username = ref('')
+
+    return { username }
+  }
+}
+</script>
+In the example above, we use the .trim modifier to remove any extra whitespace from the beginning and end of the username input value before assigning it to the username data property. If we didn't use the .trim modifier, the username data property could potentially include unnecessary whitespace.
+
+In summary, the .number and .trim modifiers are useful when working with form inputs and data properties in Vue.js components. The .number modifier ensures that input values are always converted to numbers, while the .trim modifier removes any extra whitespace from text input values.
+
+
+
+

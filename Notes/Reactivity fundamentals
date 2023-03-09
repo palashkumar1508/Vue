@@ -1,0 +1,91 @@
+Reactivity in Vue.js is the concept of making UI elements update automatically when the underlying data changes. This is done using Vue's reactive system, which allows Vue to track changes to the data and update the UI accordingly. In this article, we'll explore the fundamentals of reactivity in Vue.js and how it works with examples.
+
+Reactive Data
+In Vue.js, data properties that are reactive are defined in the data option of a Vue component. When data properties are defined in this way, Vue automatically tracks changes to the data and updates the UI accordingly. Let's look at an example:
+
+<template>
+  <div>
+    <p>Counter: {{ counter }}</p>
+    <button @click="increment">Increment</button>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      counter: 0,
+    };
+  },
+  methods: {
+    increment() {
+      this.counter++;
+    },
+  },
+};
+</script>
+In this example, we have a simple counter component with a counter data property and a button to increment the counter. When the button is clicked, the increment method is called, which updates the counter data property. Because the counter data property is reactive, Vue automatically updates the UI to display the new value of the counter.
+
+Computed Properties
+Computed properties are another way to define reactive data in Vue.js. Computed properties are functions that calculate a value based on other data properties, and are cached based on their dependencies. Let's look at an example:
+
+html
+Copy code
+<template>
+  <div>
+    <p>First Name: {{ firstName }}</p>
+    <p>Last Name: {{ lastName }}</p>
+    <p>Full Name: {{ fullName }}</p>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      firstName: 'John',
+      lastName: 'Doe',
+    };
+  },
+  computed: {
+    fullName() {
+      return this.firstName + ' ' + this.lastName;
+    },
+  },
+};
+</script>
+In this example, we have a component with firstName and lastName data properties, and a computed property fullName that calculates the full name based on the firstName and lastName properties. Because fullName is a computed property, it is automatically updated when either firstName or lastName changes.
+
+Watchers
+In addition to reactive data and computed properties, Vue.js also provides watchers. Watchers are functions that are called when a data property changes, and can be used to perform additional actions based on the change. Let's look at an example:
+
+html
+Copy code
+<template>
+  <div>
+    <p>Username: {{ username }}</p>
+    <input v-model="username" />
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      username: '',
+    };
+  },
+  watch: {
+    username(newUsername, oldUsername) {
+      console.log('Username changed from', oldUsername, 'to', newUsername);
+    },
+  },
+};
+</script>
+In this example, we have a component with a username data property and an input field that is bound to the username property using v-model. We also have a watcher that logs a message to the console when the username property changes. When the user types in the input field and changes the value of username, the watcher function is called with the new and old values of username.
+
+Conclusion
+Reactivity is a fundamental concept in Vue.js, and allows the framework to automatically update the UI when data changes. By understanding reactive data, computed
+
+
+

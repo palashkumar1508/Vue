@@ -1,0 +1,141 @@
+In Vue.js, computed properties allow us to derive new data from existing data in a reactive way. This means that whenever the dependent data changes, the computed property will be updated automatically. In the Composition API, computed properties are defined using the computed() function.
+
+Here is an example of a simple computed property using the Composition API:
+
+import { computed } from 'vue'
+
+export default {
+  setup() {
+    const firstName = 'John'
+    const lastName = 'Doe'
+
+    const fullName = computed(() => {
+      return `${firstName} ${lastName}`
+    })
+
+    return {
+      firstName,
+      lastName,
+      fullName,
+    }
+  },
+}
+In the above example, we have two separate variables, firstName and lastName, and a computed property, fullName. The computed property is defined using the computed() function, which takes an arrow function as an argument. The arrow function returns the computed value, which in this case is the concatenation of the first and last names.
+
+Now, let's take a look at a more complex example that demonstrates how we can use computed properties to filter and sort a list of data:
+
+import { computed, reactive } from 'vue'
+
+export default {
+  setup() {
+    const users = reactive([
+      { id: 1, name: 'John Doe', age: 35 },
+      { id: 2, name: 'Jane Smith', age: 28 },
+      { id: 3, name: 'Bob Johnson', age: 42 },
+    ])
+
+    const searchTerm = reactive('')
+    const sortBy = reactive('name')
+
+    const filteredUsers = computed(() => {
+      return users.filter((user) => {
+        return user.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+      })
+    })
+
+    const sortedUsers = computed(() => {
+      return filteredUsers.value.sort((a, b) => {
+        if (a[sortBy.value] < b[sortBy.value]) return -1
+        if (a[sortBy.value] > b[sortBy.value]) return 1
+        return 0
+      })
+    })
+
+    return {
+      users,
+      searchTerm,
+      sortBy,
+      filteredUsers,
+      sortedUsers,
+    }
+  },
+}
+In this example, we have an array of users that we want to filter and sort based on a search term and a selected sort order. We create two reactive variables, searchTerm and sortBy, which will be used to drive the computed properties.
+
+The filteredUsers computed property filters the users array based on the searchTerm value. We use the value property of the reactive variable to get its current value inside the computed property. The filteredUsers property is dependent on both the users array and the searchTerm value, so it will be updated whenever either of these changes.
+
+The sortedUsers computed property sorts the filteredUsers array based on the sortBy value. We use the value property of the reactive variable again to get its current value inside the computed property. The sortedUsers property is dependent on both the filteredUsers array and the sortBy value, so it will be updated whenever either of these changes.
+
+In summary, computed properties in the Composition API allow us to derive new data from existing data in a reactive way. They are defined using the computed() function and can be used to filter, sort, or transform data in various ways.
+
+Differenece Between Ref, reactive & Computed Properties-:
+
+In Vue.js composition API, there are three important concepts for managing and updating state: computed properties, refs, and reactive objects. While they all serve a similar purpose, there are some key differences between them that are worth noting.
+
+Computed Properties:
+Computed properties are used to derive a new value from existing data. They are created using the computed() function and can be used in the template just like regular data properties. Computed properties are cached and only re-evaluated when their dependencies change, which can improve performance. They are read-only and cannot be modified directly.
+Example:
+
+import { computed } from 'vue'
+
+export default {
+  setup() {
+    const firstName = ref('John')
+    const lastName = ref('Doe')
+
+    const fullName = computed(() => {
+      return `${firstName.value} ${lastName.value}`
+    })
+
+    return { firstName, lastName, fullName }
+  }
+}
+In this example, a computed property fullName is created by combining two reactive properties firstName and lastName. The value of fullName will automatically update whenever firstName or lastName changes.
+
+Refs:
+Refs are used to store mutable values that can be updated directly. They are created using the ref() function and can be accessed and modified using the .value property. Refs can hold any value, including objects and arrays.
+Example:
+
+import { ref } from 'vue'
+
+export default {
+  setup() {
+    const count = ref(0)
+
+    function increment() {
+      count.value++
+    }
+
+    return { count, increment }
+  }
+}
+In this example, a ref count is created with an initial value of 0. The function increment can be called to update the value of count by one.
+
+Reactive Objects:
+Reactive objects are used to create a reactive data model that can be watched and updated. They are created using the reactive() function and can contain any number of properties. Reactive objects are not cached and are re-evaluated whenever any property changes.
+Example:
+
+
+import { reactive } from 'vue'
+
+export default {
+  setup() {
+    const user = reactive({
+      firstName: 'John',
+      lastName: 'Doe',
+      age: 30
+    })
+
+    function increaseAge() {
+      user.age++
+    }
+
+    return { user, increaseAge }
+  }
+}
+In this example, a reactive object user is created with three properties: firstName, lastName, and age. The function increaseAge can be called to update the value of age by one.
+
+In summary, computed properties are read-only and used to derive new values from existing data, refs are mutable and used to store values that can be updated directly, and reactive objects are used to create a reactive data model that can be watched and updated. Understanding the differences between these concepts is important for effectively managing state in a Vue.js application.
+
+
+

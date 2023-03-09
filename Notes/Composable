@@ -1,0 +1,75 @@
+
+
+***********WRONG*************
+
+Vue.js 3 introduces the Composition API as a new way to create and manage component logic. The Composition API is a set of functions that allow you to create reusable logic and use it in your components. One of the key benefits of the Composition API is its composable nature, meaning that you can build complex logic by composing simple functions together.
+
+Here are some examples of how you can use composable functions in the Vue.js Composition API:
+
+useFetch
+The useFetch composable function can be used to fetch data from an API and return it to the component. This composable function is reusable and can be used in multiple components.
+
+import { reactive } from 'vue'
+import axios from 'axios'
+
+export function useFetch(url) {
+  const state = reactive({
+    isLoading: true,
+    data: null,
+    error: null
+  })
+
+  axios.get(url)
+    .then(response => {
+      state.isLoading = false
+      state.data = response.data
+    })
+    .catch(error => {
+      state.isLoading = false
+      state.error = error
+    })
+
+  return state
+}
+Here, we are using the reactive function to create a reactive state object that holds the loading state, data, and error. We then use the axios library to make the API request and update the state accordingly.
+
+useToggle
+The useToggle composable function can be used to toggle a boolean value in the component. This function is also reusable and can be used in multiple components.
+
+import { ref } from 'vue'
+
+export function useToggle(initialValue = false) {
+  const value = ref(initialValue)
+
+  function toggle() {
+    value.value = !value.value
+  }
+
+  return [value, toggle]
+}
+Here, we are using the ref function to create a reactive reference to the initial value. We then define a toggle function that updates the value to its opposite. Finally, we return an array with the value and the toggle function.
+
+useValidation
+The useValidation composable function can be used to validate form input in the component. This composable function is also reusable and can be used in multiple components.
+
+import { ref } from 'vue'
+
+export function useValidation() {
+  const isValid = ref(false)
+
+  function validate(value) {
+    if (value.length >= 6) {
+      isValid.value = true
+    } else {
+      isValid.value = false
+    }
+  }
+
+  return [isValid, validate]
+}
+Here, we are using the ref function to create a reactive reference to the isValid variable. We then define a validate function that checks the length of the value and updates the isValid variable accordingly. Finally, we return an array with the isValid variable and the validate function.
+
+Overall, the Vue.js Composition API's composable functions make it easier to create reusable logic and build complex components by composing simple functions together.
+
+
+

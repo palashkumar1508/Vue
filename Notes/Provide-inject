@@ -1,0 +1,109 @@
+In Vue.js, provide and inject are used to pass data from a parent component to a child component, even if they are not directly related in the component tree. In the composition API, provide and inject work in a similar way as in the options API.
+
+To use provide and inject, you first need to create a provide object in the parent component and define the data that you want to pass to the child component. Then, in the child component, you can use the inject function to access that data.
+
+Here's an example:
+
+// ParentComponent.vue
+
+<template>
+  <div>
+    <h1>Parent Component</h1>
+    <ChildComponent />
+  </div>
+</template>
+
+<script>
+import { defineComponent } from 'vue'
+import ChildComponent from './ChildComponent.vue'
+
+export default defineComponent({
+  components: {
+    ChildComponent
+  },
+  setup() {
+    const message = 'Hello from Parent Component'
+    const provideData = {
+      message
+    }
+    provide('data', provideData)
+  }
+})
+</script>
+
+// ChildComponent.vue
+
+<template>
+  <div>
+    <h2>Child Component</h2>
+    <p>{{ message }}</p>
+  </div>
+</template>
+
+<script>
+import { defineComponent, inject } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const { message } = inject('data', { message: 'Default message' })
+    return {
+      message
+    }
+  }
+})
+</script>
+In this example, we have a ParentComponent that provides a message using provide. The provide function takes two arguments: a key for the data, and the data itself. In this case, we're using the key 'data' and providing an object with a message property.
+
+In the ChildComponent, we use inject to access the message provided by the ParentComponent. The inject function takes two arguments: the key for the data, and a default value to use if the data is not found. In this case, we're using the key 'data' and a default value of { message: 'Default message' }.
+
+Once we have the message in the child component, we can use it in the template by interpolating the message variable.
+
+provide and inject can also be used with reactive data, computed properties, and methods. Here's an example that provides a reactive object and uses a computed property in the child component:
+
+// ParentComponent.vue
+
+<template>
+  <div>
+    <h1>Parent Component</h1>
+    <ChildComponent />
+  </div>
+</template>
+
+<script>
+import { defineComponent, ref, computed } from 'vue'
+import ChildComponent from './ChildComponent.vue'
+
+export default defineComponent({
+  components: {
+    ChildComponent
+  },
+  setup() {
+    const user = ref({ name: 'John', age: 30 })
+    const fullName = computed(() => {
+      return `${user.value.name} (${user.value.age})`
+    })
+    provide('user', user)
+    provide('fullName', fullName)
+  }
+})
+</script>
+
+// ChildComponent.vue
+
+<template>
+  <div>
+    <h2>Child Component</h2>
+    <p>{{ fullName }}</p>
+  </div>
+</template>
+
+<script>
+import { defineComponent, inject } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const user = inject('user', { name: 'Default', age: 0 })
+    const fullName = inject('fullName', { value: 'Default Name' })
+    return
+
+

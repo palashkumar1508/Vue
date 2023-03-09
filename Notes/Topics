@@ -1,0 +1,49 @@
+Configuration
+
+write a detailed notes with examples on Project Scaffolding (Vue CLI) in vue js
+write a detailed notes with examples on IDE Support in vue js
+write a detailed notes with examples on Browser Devtools in vue js
+write a detailed notes with examples on Linting & Formatting in vue js
+
+
+Essentials
+
+write a complete detailed notes with examples on Template syntax in vue js composition API
+write a detailed notes with examples on Reactivity fundamentals in vue js
+write a detailed notes with examples on Event handling in vue js
+write a detailed notes with examples on Computed properties in vue js
+write a detailed notes with examples on Watchers in vue js
+write a detailed notes with examples on Form input bindings in vue js
+write a detailed notes with examples on Template refs in vue js
+
+
+Components In-Depth
+
+write a detailed notes with examples on Lifecycle hooks in vue js
+write a detailed notes with examples on Direct / Indirect Component in vue js communication (Parent to Child / Child to Parent) in vue js Composition API
+write a detailed notes with examples on Slots in component api vue js
+write a detailed notes with examples on Provide/Inject in vue js
+
+
+Advance
+
+write a detailed notes with examples on Transition in vue js
+write a detailed notes with examples on Transition group in vue js
+write a detailed notes with examples on Teleport in vue js
+write a detailed notes with examples on State Management with Pinia in vue js
+write a detailed notes with examples on Axios (Handling API requests) in vue js
+
+
+
+
+
+write a detailed notes with examples on 
+ in vue js
+ 
+ Calling Functions
+ 
+ write a detailed notes with examples on $emit in vue js composition API
+ 
+Difference between computed property, ref & reactive in vue js composition api
+ 
+  write a detailed notes with examples on modifiers in vue js

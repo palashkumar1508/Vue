@@ -1,0 +1,122 @@
+
+Sure! Here's a detailed explanation of Direct and Indirect Component Communication in Vue.js using the Composition API:
+
+Direct Component Communication:
+Direct Component Communication refers to the way of passing data and methods between components that have a direct parent-child relationship. This communication is achieved through two methods: Props and Events.
+
+a) Parent to Child Communication:
+
+In Parent to Child Communication, the parent component passes data to its child components using props. Props are a custom attribute for passing data from parent components to child components. The child components can access the data passed through props using the props property.
+
+Here's an example:
+
+Parent Component:
+
+<template>
+  <div>
+    <child-component :message="message"></child-component>
+  </div>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue'
+import ChildComponent from './ChildComponent.vue'
+
+export default defineComponent({
+  name: 'ParentComponent',
+  components: { ChildComponent },
+  setup() {
+    const message = ref('Hello from parent component!')
+
+    return { message }
+  }
+})
+</script>
+Child Component:
+
+<template>
+  <div>{{ message }}</div>
+</template>
+
+<script>
+import { defineComponent, props } from 'vue'
+
+export default defineComponent({
+  name: 'ChildComponent',
+  props: {
+    message: String
+  }
+})
+</script>
+In this example, the parent component passes the message data to its child component using the :message prop binding. The child component then receives the message data using the props property.
+
+b) Child to Parent Communication:
+
+In Child to Parent Communication, the child component emits events that the parent component can listen to using the v-on directive.
+
+Here's an example:
+
+Parent Component:
+
+<template>
+  <div>
+    <child-component v-on:message-sent="onMessageSent"></child-component>
+  </div>
+</template>
+
+<script>
+import { defineComponent } from 'vue'
+import ChildComponent from './ChildComponent.vue'
+
+export default defineComponent({
+  name: 'ParentComponent',
+  components: { ChildComponent },
+  methods: {
+    onMessageSent(message) {
+      console.log(message)
+    }
+  }
+})
+</script>
+
+Child Component:
+
+<template>
+  <div>
+    <button v-on:click="sendMessage">Send Message</button>
+  </div>
+</template>
+
+<script>
+import { defineComponent, ref } from 'vue'
+import { onMounted } from '@vue/runtime-core'
+
+export default defineComponent({
+  name: 'ChildComponent',
+  emits: ['message-sent'],
+  setup(_, { emit }) {
+    const message = ref('Hello from child component!')
+
+    const sendMessage = () => {
+      emit('message-sent', message.value)
+    }
+
+    return { sendMessage }
+  }
+})
+</script>
+In this example, the child component emits a message-sent event when the user clicks on the "Send Message" button. The parent component listens to this event using the v-on directive and calls the onMessageSent method when the event is triggered. The onMessageSent method logs the message data to the console.
+
+Indirect Component Communication:
+Indirect Component Communication refers to the way of passing data and methods between components that do not have a direct parent-child relationship. This communication is achieved through a global event bus.
+
+The global event bus is an instance of Vue that can be imported and used in any component. It allows components to emit and listen to events globally.
+
+Here's an example:
+
+Event Bus:
+import { createApp } from 'vue'
+
+export const app
+
+

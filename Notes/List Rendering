@@ -1,0 +1,78 @@
+List rendering is a common requirement when working with dynamic data in Vue.js applications. The Composition API in Vue.js provides a powerful and flexible way to work with lists of data, allowing you to easily iterate over arrays and output elements based on their values. In this article, we'll explore how to use list rendering with the Composition API in Vue.js, including some examples to help you get started.
+
+Rendering a simple list
+The most basic way to render a list of items in Vue.js is to use the v-for directive. In the Composition API, you can use the computed function to create a reactive computed property that returns the array of items you want to render, and then use the v-for directive to loop over this array and output the elements. Here's an example:
+
+
+<template>
+  <div>
+    <ul>
+      <li v-for="item in items" :key="item.id">{{ item.name }}</li>
+    </ul>
+  </div>
+</template>
+
+<script>
+import { computed } from 'vue';
+
+export default {
+  setup() {
+    const items = computed(() => [
+      { id: 1, name: 'Item 1' },
+      { id: 2, name: 'Item 2' },
+      { id: 3, name: 'Item 3' },
+    ]);
+
+    return {
+      items,
+    };
+  },
+};
+</script>
+In this example, we create a computed property called items that returns an array of three objects with id and name properties. We then use the v-for directive to loop over this array and output a list item for each object, using the :key attribute to set a unique key for each item.
+
+Filtering and sorting a list
+Sometimes, you may want to filter or sort a list of items based on some criteria. In the Composition API, you can use the computed function to create a reactive computed property that filters or sorts the original array, and then use the v-for directive to loop over the computed property and output the elements. Here's an example:
+
+
+<template>
+  <div>
+    <input v-model="filter" placeholder="Search...">
+    <ul>
+      <li v-for="item in filteredItems" :key="item.id">{{ item.name }}</li>
+    </ul>
+  </div>
+</template>
+
+<script>
+import { computed, ref } from 'vue';
+
+export default {
+  setup() {
+    const items = computed(() => [
+      { id: 1, name: 'Item 1' },
+      { id: 2, name: 'Item 2' },
+      { id: 3, name: 'Item 3' },
+    ]);
+    const filter = ref('');
+
+    const filteredItems = computed(() => {
+      const f = filter.value.toLowerCase();
+      return items.value.filter((item) => item.name.toLowerCase().includes(f));
+    });
+
+    return {
+      items,
+      filter,
+      filteredItems,
+    };
+  },
+};
+</script>
+In this example, we create a computed property called filteredItems that filters the original items array based on the value of the filter ref. We then use the v-for directive to loop over this computed property and output a list item for each object, using the :key attribute to set a unique key for each item. We also bind the filter ref to an input element, so the user can enter a search term to filter the list.
+
+Rendering a list of components
+Another common use case for list rendering is to render a list of components based on an array
+
+
+
