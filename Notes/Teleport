@@ -1,0 +1,54 @@
+Teleport is a new feature introduced in Vue 3 that allows a component to be rendered in a different part of the DOM tree than its parent component, without losing its original state or event listeners. This is particularly useful when you want to render a component as a modal, dialog, or tooltip, that is detached from its parent component, but still needs to access the same data and methods.
+
+In Vue 3 Composition API, the Teleport component can be used with the teleport function, which accepts two arguments: the target element where the component should be rendered and the component to be teleported.
+
+Here's an example of how to use Teleport in Vue 3 Composition API:
+
+<template>
+  <button @click="showModal = true">Show Modal</button>
+  <teleport to="body">
+    <modal v-if="showModal" @close="showModal = false">
+      <h2>Modal Content</h2>
+      <p>Modal body text goes here</p>
+    </modal>
+  </teleport>
+</template>
+
+<script>
+import { ref, defineComponent, teleport } from 'vue'
+import Modal from './Modal.vue'
+
+export default defineComponent({
+  components: {
+    Modal
+  },
+  setup() {
+    const showModal = ref(false)
+    const target = ref(document.body)
+    return {
+      showModal,
+      target,
+      teleport
+    }
+  }
+})
+</script>
+In this example, we have a button that toggles the showModal flag when clicked. When the showModal is true, the Modal component is rendered using Teleport to the body element. This means that the Modal component is detached from the parent component and is rendered at the top level of the document, but it still has access to the same data and methods as the parent component.
+
+Note that we define a target variable as a ref to the document.body element, and then pass it as the first argument to the teleport function. This tells Vue to render the component inside the body element instead of its parent element.
+
+Also, note that we define a custom close event in the Modal component, which is emitted when the user clicks on the close button. We can then listen to this event in the parent component to update the showModal flag and close the modal.
+
+<template>
+  <div class="modal-overlay" @click="$emit('close')">
+    <div class="modal">
+      <slot />
+      <button class="modal-close" @click="$emit('close')">X</button>
+    </div>
+  </div>
+</template>
+In the Modal component, we define a custom close event that is emitted when the user clicks on the close button or the overlay. This event is then listened to in the parent component to close the modal and update the showModal flag.
+
+Overall, using Teleport in Vue 3 Composition API allows us to create flexible and reusable components that can be rendered anywhere in the document, without losing their state or event listeners. This is particularly useful for creating modals, dialogs, and tooltips that can be attached to any part of the page.
+
+

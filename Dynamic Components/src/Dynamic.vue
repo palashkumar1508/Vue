@@ -56,9 +56,11 @@ const tabs = {
         <div class="bg-black w-3/4 flex mx-auto my-8 justify-center shadow-lg shadow-yellow-500 rounded-md items-center flex-col p-4  border-2 border-yellow-400">
         <h1 class="text-2xl text-yellow-400">With Dynamic Components</h1><br>
         <div class="">
-            <button @click="post = 'Recent'" class="bg-yellow-300 p-3 m-3 rounded-lg border-2 border-black" >Recent</button>
+            <!-- <button @click="post = 'Recent'" class="bg-yellow-300 p-3 m-3 rounded-lg border-2 border-black" >Recent</button>
             <button @click="post = 'Popular'" class="bg-yellow-300 p-3 m-3 rounded-lg border-2 border-black">Popular</button>
-            <button @click="post = 'Guest'" class="bg-yellow-300 p-3 m-3 rounded-lg border-2 border-black">Guest</button>
+            <button @click="post = 'Guest'" class="bg-yellow-300 p-3 m-3 rounded-lg border-2 border-black">Guest</button> -->
+            <button class="bg-yellow-300 p-3 m-3 rounded-lg border-2 border-black" v-for="(_,tab) in tabs" :key="tab" @click="post = tab">{{ tab }}</button>
+            
             <button @click="post = ''" class="bg-yellow-300 p-3 m-3 rounded-lg border-2 border-black">Hide All</button>
         </div>
             <component :is="tabs[post]" />
